@@ -22,7 +22,10 @@ var startButton = document.querySelector(".introduction .startBut");
 var allIntros = document.querySelector(".introduction");
 
 //handling history and navigation
-const bar = document.querySelector(".main .header .bar");
+
+//THIS BAR WOULD COMEBACK WHEN THERES DATABASE
+//THIS BAR WOULD COMEBACK WHEN THERES DATABASE
+// const bar = document.querySelector(".main .header .bar");
 const navSection = document.querySelector(".innerCont .navSection");
 const controlHistory = document.querySelector(
   ".innerCont .navSection .controlHistory"
@@ -36,112 +39,131 @@ const allHistory = document.querySelector(
   ".innerCont .navSection .history .allHistory"
 );
 
-bar.style.display = "none";
+// bar.style.display = "none";
 
-bar.addEventListener("click", () => {
-  navSection.classList.toggle("navEnter");
-  innerCont.style.overflow = "auto";
-});
+// bar.addEventListener("click", () => {
+//   navSection.classList.toggle("navEnter");
+//   innerCont.style.overflow = "auto";
+// });
+
 controlHistory.addEventListener("click", () => {
   allHistory.innerHTML = "";
   historyy.style.transform = "translateX(0%)";
   historyy.style.height = "85%";
   innerCont.style.overflow = "hidden";
-  // const url3 = "http://127.0.0.1:8080/premium/api/fetchMessages";
-  const url3 =
-    "https://chatbot-backend-qpc2.onrender.com/premium/api/fetchMessages";
-  fetch(url3, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name: "USER1",
-    }),
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      // Check if the array is empty
-      if (res.length === 0) {
-        const noHistoryMessage = document.createElement("div");
-        noHistoryMessage.classList.add("noHistoryMessage");
-        noHistoryMessage.textContent = "No chat history available.";
-        allHistory.appendChild(noHistoryMessage);
-      } else {
-        res.forEach((item) => {
-          const individualElement = document.createElement("div");
-          individualElement.classList.add("indiv");
-          function removeSubstrings(inputString) {
-            const substringsToRemove = [
-              "Pls help me. Dont exceed 150 words",
-              "Dont exceed 150 words",
-            ];
-            let resultString = inputString;
-            substringsToRemove.forEach((substring) => {
-              resultString = resultString.replace(substring, "");
-            });
-            resultString = resultString.trim().replace(/\s+/g, " ");
+  const url3 = "http://127.0.0.1:8080/premium/api/fetchMessages";
+  // const url3 =
+  //   "https://chatbot-backend-qpc2.onrender.com/premium/api/fetchMessages";
 
-            return resultString;
-          }
-          individualElement.innerHTML = `
-          <div class="title">${item[0].chat_id}</div>
-          <span>${removeSubstrings(item[0].message)}</span>
-        `;
+  //the general fetch
+  //the general fetch
+  //the general fetch
+  //the general fetch
+  // fetch(url3, {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify({
+  //     name: "USER1",
+  //   }),
+  // })
+  //   .then((res) => res.json())
+  //   .then((res) => {
+  //     // Check if the array is empty
+  //     if (res.length === 0) {
+  //       const noHistoryMessage = document.createElement("div");
+  //       noHistoryMessage.classList.add("noHistoryMessage");
+  //       noHistoryMessage.textContent = "No chat history available.";
+  //       allHistory.appendChild(noHistoryMessage);
+  //     } else {
+  //       res.forEach((item) => {
+  //         const individualElement = document.createElement("div");
+  //         individualElement.classList.add("indiv");
+  //         function removeSubstrings(inputString) {
+  //           const substringsToRemove = [
+  //             "Pls help me. Dont exceed 150 words",
+  //             "Dont exceed 150 words",
+  //           ];
+  //           let resultString = inputString;
+  //           substringsToRemove.forEach((substring) => {
+  //             resultString = resultString.replace(substring, "");
+  //           });
+  //           resultString = resultString.trim().replace(/\s+/g, " ");
 
-          // Attach a click event listener to each individual element
-          individualElement.addEventListener("click", () => {
-            innerCont.querySelectorAll(".sender").forEach((item, i) => {
-              innerCont.removeChild(item);
-            });
-            innerCont.querySelectorAll(".reciever").forEach((item, i) => {
-              innerCont.removeChild(item);
-            });
-            var id = item[0].chat_id; // Extract chat_id from item
-            console.log(id);
-            // const url4 = `http://127.0.0.1:8080/premium/api/fetchMessage/${id}`;
-            const url4 = `https://chatbot-backend-qpc2.onrender.com/premium/api/fetchMessage/${id}`;
-            navSection.classList.remove("navEnter");
-            historyy.style.transform = "translateX(-120%)";
-            innerCont.style.overflow = "";
-            fetch(url4, {
-              method: "GET", // Use "GET" instead of "Get"
-              credentials: "include",
-            })
-              .then((res) => res.json())
-              .then((res) => {
-                res.forEach((item, i) => {
-                  if (item.sender == "user") {
-                    function removeSubstrings(inputString) {
-                      const substringsToRemove = [
-                        "My car just developed",
-                        "Pls help me. Dont exceed 150 words",
-                        "Dont exceed 150 words",
-                      ];
-                      let resultString = inputString;
-                      substringsToRemove.forEach((substring) => {
-                        resultString = resultString.replace(substring, "");
-                      });
-                      resultString = resultString.trim().replace(/\s+/g, " ");
+  //           return resultString;
+  //         }
+  //         individualElement.innerHTML = `
+  //         <div class="title">${item[0].chat_id}</div>
+  //         <span>${removeSubstrings(item[0].message)}</span>
+  //       `;
 
-                      return resultString;
-                    }
-                    displayOnScreen(
-                      `${removeSubstrings(item.message)}`,
-                      "sender",
-                      []
-                    );
-                  } else {
-                    displayOnScreen(`${item.message}`, "reciever", []);
-                  }
-                });
-              });
-          });
+  //         // Attach a click event listener to each individual element
+  //         individualElement.addEventListener("click", () => {
+  //           innerCont.querySelectorAll(".sender").forEach((item, i) => {
+  //             innerCont.removeChild(item);
+  //           });
+  //           innerCont.querySelectorAll(".reciever").forEach((item, i) => {
+  //             innerCont.removeChild(item);
+  //           });
+  //           var id = item[0].chat_id; // Extract chat_id from item
+  //           console.log(id);
+  //           const url4 = `http://127.0.0.1:8080/premium/api/fetchMessage/${id}`;
+  //           // const url4 = `https://chatbot-backend-qpc2.onrender.com/premium/api/fetchMessage/${id}`;
+  //           navSection.classList.remove("navEnter");
+  //           historyy.style.transform = "translateX(-120%)";
+  //           innerCont.style.overflow = "";
 
-          allHistory.appendChild(individualElement);
-        });
-      }
-    });
+  //           //this below is to fetch the messages of the user
+  //           //this below is to fetch the messages of the user
+  //           //this below is to fetch the messages of the user
+  //           // fetch(url4, {
+  //           //   method: "GET", // Use "GET" instead of "Get"
+  //           //   credentials: "include",
+  //           // })
+  //           //   .then((res) => res.json())
+  //           //   .then((res) => {
+  //           //     res.forEach((item, i) => {
+  //           //       if (item.sender == "user") {
+  //           //         function removeSubstrings(inputString) {
+  //           //           const substringsToRemove = [
+  //           //             "My car just developed",
+  //           //             "Pls help me. Dont exceed 150 words",
+  //           //             "Dont exceed 150 words",
+  //           //           ];
+  //           //           let resultString = inputString;
+  //           //           substringsToRemove.forEach((substring) => {
+  //           //             resultString = resultString.replace(substring, "");
+  //           //           });
+  //           //           resultString = resultString.trim().replace(/\s+/g, " ");
+
+  //           //           return resultString;
+  //           //         }
+  //           //         displayOnScreen(
+  //           //           `${removeSubstrings(item.message)}`,
+  //           //           "sender",
+  //           //           []
+  //           //         );
+  //           //       } else {
+  //           //         displayOnScreen(`${item.message}`, "reciever", []);
+  //           //       }
+  //           //     });
+  //           //   });
+
+  //           //this above is to fetch the messages of the user
+  //           //this above is to fetch the messages of the user
+  //           //this above is to fetch the messages of the user
+  //         });
+
+  //         allHistory.appendChild(individualElement);
+  //       });
+  //     }
+  //   });
+
+  //the general fetch ends here
+  //the general fetch ends here
+  //the general fetch ends here
+  //the general fetch ends here
 });
 
 controlNewChat.addEventListener("click", () => {
@@ -236,15 +258,15 @@ startButton.addEventListener("click", () => {
   startMessage();
   // allIntros.style.zIndex = 2;
   allIntros.style.display = "none";
-  bar.style.display = "";
+  // bar.style.display = "";
   chatId = generateChatId();
 });
 
-document.addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
-    startButton.click();
-  }
-});
+// document.addEventListener("keydown", function (event) {
+//   if (event.key === "Enter") {
+//     startButton.click();
+//   }
+// });
 
 // document.addEventListener("DOMContentLoaded", () => {
 //   innerCont.scrollTop += 1000;
@@ -463,13 +485,25 @@ const displayOnScreen = (elem, role, options) => {
   innerCont.appendChild(superCont);
   innerCont.scrollTop += 100;
 };
+
+function addDivAfterFullStop(text) {
+  const sentences = text.split("."); // Split the text into sentences
+
+  let modifiedText = "";
+  for (const sentence of sentences) {
+    modifiedText += `<div style="margin-bottom: 10px;">${sentence}.</div>`;
+  }
+
+  return modifiedText;
+}
+
 const replyMessage = async (message) => {
   // console.log(message);
   // var url = "http://127.0.0.1:8080/premium";
   var url = "https://chatbot-backend-qpc2.onrender.com/premium";
-  // var url2 = "http://127.0.0.1:8080/premium/api/saveMessage";
-  var url2 =
-    "https://chatbot-backend-qpc2.onrender.com/premium/api/saveMessage";
+  var url2 = "http://127.0.0.1:8080/premium/api/saveMessage";
+  // var url2 =
+  //   "https://chatbot-backend-qpc2.onrender.com/premium/api/saveMessage";
   // var url2 = "https://chatbot-backend-qpc2.onrender.com/premium";
   //   if (requestCount == 5) {
   //     displayOnScreen(
@@ -485,6 +519,24 @@ const replyMessage = async (message) => {
   //     anime ? innerCont.removeChild(anime) : console.log("no animations");
   //     return;
   //   }
+
+  // var txt = `Lorem ipsum dolor sit amet consectetur adipisicing elit.
+  // Dolores reprehenderit natus doloribus unde quas deserunt ut
+  // ducimus, fuga maiores quasi, aliquam nobis. Blanditiis sapiente
+  // nesciunt nostrum dicta esse, molestiae beatae. Lorem ipsum dolor
+  // sit amet consectetur adipisicing elit. Amet illum, earum
+  // repellat quidem magni sed vero dolores animi! Harum asperiores
+  // tempore ex praesentium unde, facilis qui quis reiciendis
+  // delectus inventore. Lorem ipsum, dolor sit amet consectetur
+  // adipisicing elit. Natus minima ad quod nulla error facere amet
+  // perferendis debitis dolorum minus quasi praesentium, nobis
+  // voluptas impedit quis eius porro repellat cumque. Lorem ipsum
+  // dolor sit amet consectetur adipisicing elit. Dignissimos
+  // inventore labore ducimus? Quis amet quaerat sequi nemo maiores
+  // quia eos, eveniet nesciunt fugiat in impedit possimus
+  // voluptatibus eius ipsam facere.`;
+  // displayOnScreen(addDivAfterFullStop(txt), "reciever", []);
+
   await fetch(url, {
     method: "POST",
     headers: {
@@ -505,18 +557,25 @@ const replyMessage = async (message) => {
         return;
       } else {
         requestCount += 1;
-        displayOnScreen(res.data, "reciever", []);
-        fetch(url2, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            messages: res.conversation,
-            count: requestCount,
-            chatId: chatId,
-          }),
-        });
+        displayOnScreen(addDivAfterFullStop(res.data), "reciever", []);
+
+        //this is the function for saving the message to the database
+        //this is the function for saving the message to the database
+        //this is the function for saving the message to the database
+        //this is the function for saving the message to the database
+        //this is the function for saving the message to the database
+        //this is the function for saving the message to the database
+        // fetch(url2, {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify({
+        //     messages: res.conversation,
+        //     count: requestCount,
+        //     chatId: chatId,
+        //   }),
+        // });
         // .then((res)=>{
 
         // })
