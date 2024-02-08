@@ -22,10 +22,6 @@ var startButton = document.querySelector(".introduction .startBut");
 var allIntros = document.querySelector(".introduction");
 
 //handling history and navigation
-
-//THIS BAR WOULD COMEBACK WHEN THERES DATABASE
-//THIS BAR WOULD COMEBACK WHEN THERES DATABASE
-// const bar = document.querySelector(".main .header .bar");
 const navSection = document.querySelector(".innerCont .navSection");
 const controlHistory = document.querySelector(
   ".innerCont .navSection .controlHistory"
@@ -244,12 +240,6 @@ function startMessage() {
       "Describe the issue",
     ]);
 
-    // function removeLastOption() {
-    //   var allOfThem = allSpans.querySelectorAll("span");
-    //   console.log(allOfThem[allOfThem.length - 2]);
-    //   allOfThem[allOfThem.length - 2].style.display = "none";
-    // }
-    // allSpans ? removeLastOption() : "";
   }, 2000);
 }
 // startMessage();
@@ -262,16 +252,6 @@ startButton.addEventListener("click", () => {
   chatId = generateChatId();
 });
 
-// document.addEventListener("keydown", function (event) {
-//   if (event.key === "Enter") {
-//     startButton.click();
-//   }
-// });
-
-// document.addEventListener("DOMContentLoaded", () => {
-//   innerCont.scrollTop += 1000;
-// });
-// const dots = document.querySelectorAll("div");
 
 function addAnimate(role) {
   const superCont = document.createElement("div");
@@ -418,6 +398,9 @@ const displayOnScreen = (elem, role, options) => {
   if (role == "sender") {
     superCont.classList.add("sender");
     cont.classList.add("senderInner");
+  }else if(role == "others"){
+    superCont.classList.add("recieverMechanics")
+    cont.classList.add("recieverMechanicsInner")
   } else {
     superCont.classList.add("reciever");
     cont.classList.add("recieverInner");
@@ -502,40 +485,9 @@ const replyMessage = async (message) => {
   // var url = "http://127.0.0.1:8080/premium";
   var url = "https://chatbot-backend-qpc2.onrender.com/premium";
   var url2 = "http://127.0.0.1:8080/premium/api/saveMessage";
-  // var url2 =
-  //   "https://chatbot-backend-qpc2.onrender.com/premium/api/saveMessage";
-  // var url2 = "https://chatbot-backend-qpc2.onrender.com/premium";
-  //   if (requestCount == 5) {
-  //     displayOnScreen(
-  //       `You have exceeded your free trial. Restart the request
-  //     or kindly<a href="#" class="paymentLink">SUBSCRIBE</a> to our premium package
-  //     `,
-  //       "reciever",
-  //       []
-  //     );
-  //     sendButton.disabled = true;
-  //     sendButton.classList.add("blur");
-  //     const anime = document.getElementsByClassName("anime")[0];
-  //     anime ? innerCont.removeChild(anime) : console.log("no animations");
-  //     return;
-  //   }
+  var url2 =
+    "https://chatbot-backend-qpc2.onrender.com/premium/api/saveMessage";
 
-  // var txt = `Lorem ipsum dolor sit amet consectetur adipisicing elit.
-  // Dolores reprehenderit natus doloribus unde quas deserunt ut
-  // ducimus, fuga maiores quasi, aliquam nobis. Blanditiis sapiente
-  // nesciunt nostrum dicta esse, molestiae beatae. Lorem ipsum dolor
-  // sit amet consectetur adipisicing elit. Amet illum, earum
-  // repellat quidem magni sed vero dolores animi! Harum asperiores
-  // tempore ex praesentium unde, facilis qui quis reiciendis
-  // delectus inventore. Lorem ipsum, dolor sit amet consectetur
-  // adipisicing elit. Natus minima ad quod nulla error facere amet
-  // perferendis debitis dolorum minus quasi praesentium, nobis
-  // voluptas impedit quis eius porro repellat cumque. Lorem ipsum
-  // dolor sit amet consectetur adipisicing elit. Dignissimos
-  // inventore labore ducimus? Quis amet quaerat sequi nemo maiores
-  // quia eos, eveniet nesciunt fugiat in impedit possimus
-  // voluptatibus eius ipsam facere.`;
-  // displayOnScreen(addDivAfterFullStop(txt), "reciever", []);
 
   await fetch(url, {
     method: "POST",
@@ -546,7 +498,7 @@ const replyMessage = async (message) => {
   })
     .then((res) => res.json())
     .then((res) => {
-      if (res.data == "an error occured") {
+      if (res.data == "An error occurred") {
         setTimeout(() => {
           const anime = document.getElementsByClassName("anime")[0];
           anime.textContent = "An error occured. Refresh the page";
@@ -555,7 +507,18 @@ const replyMessage = async (message) => {
           sendButton.classList.add("blur");
         }, 1000);
         return;
-      } else {
+      } else if(res.data.toLowerCase().includes("mechanic")|| res.data.toLowerCase().includes("professional")|| res.data.toLowerCase().includes("assistance")){
+        requestCount += 1;
+        displayOnScreen(addDivAfterFullStop(res.data), "reciever", []);
+        setTimeout(()=>{
+          displayOnScreen(
+            'Click <a href="https://findmechanics.asoroautomotive.com/?_gl=1*z1hic2*_ga*MjA2MTUzMTU1My4xNzA3MjkxMDY1*_ga_NBETF1R9H5*MTcwNzI5MTA2NS4xLjEuMTcwNzI5MTA3MC4wLjAuMA.." class="paymentLink" target="_">Here</a> to find available mechanics',
+            "others",
+            []
+          );
+         },3000)
+      }
+      else {
         requestCount += 1;
         displayOnScreen(addDivAfterFullStop(res.data), "reciever", []);
 
@@ -583,7 +546,6 @@ const replyMessage = async (message) => {
       }
     })
     .catch((err) => {
-      alert("no internet");
       setTimeout(() => {
         const anime = document.getElementsByClassName("anime")[0];
         anime.textContent = "An error occured. Refresh the page";
